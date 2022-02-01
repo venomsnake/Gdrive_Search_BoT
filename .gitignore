@@ -1,0 +1,11 @@
+config.env
+*.pyc
+downloads/*
+download/*
+data*
+.vscode
+.idea
+*.json
+authorized_chats.txt
+log.txt
+accounts/*

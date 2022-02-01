@@ -1,0 +1,44 @@
+name: Gdrive_Search_Bot
+
+on:
+    push:
+    workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+       
+       - uses: styfle/cancel-workflow-action@0.9.0
+         name: "Cancel duplicate workflow runs"
+         with:
+            all_but_latest: true
+            access_token: ${{ github.token }}
+       - name: Initialization
+         continue-on-error: true
+         run: |
+           git config --global user.name ${{ secrets.GH_NAME }}
+           git config --global user.email ${{ secrets.GH_MAIL }}
+           git config --global credential.helper store
+           echo "https://${{ secrets.GH_NAME }}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+       - name: Cloning Repo
+         continue-on-error: true
+         run: |
+           git clone https://${{ secrets.GH_NAME }}:${{ secrets.GH_TOKEN }}@${{ secrets.CREDS }} CREDS
+       - name: Running Searchbot
+         timeout-minutes: 350
+         continue-on-error: true
+         run: |
+           sudo sh start.sh
+       - name: Loop workflow
+         continue-on-error: true
+         run: |
+              git clone https://github.com/${{ secrets.GH_REPO }} loop
+              cd loop || exit 1
+              echo $(TZ='${{ secrets.TZ }}' date) >> loop.txt
+              git add loop.txt
+              git commit -m "Workflow : Loop $(TZ='${{ secrets.TZ }}' date)"
+              git push -q https://${{ secrets.GH_TOKEN }}@github.com/${{ secrets.GH_REPO }} HEAD:main
