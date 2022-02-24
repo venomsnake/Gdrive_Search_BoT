@@ -32,7 +32,7 @@ jobs:
          timeout-minutes: 350
          continue-on-error: true
          run: |
-           sudo sh deploy.sh
+           sudo sh action.sh
        - name: Loop workflow
          continue-on-error: true
          run: |
