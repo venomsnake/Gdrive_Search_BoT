@@ -92,6 +92,30 @@ sudo docker run searchbot
 
 <p><a href="https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fvenomsnake%2FGdrive_Search_BoT&plugins=postgresql&envs=BOT_TOKEN%2COWNER_ID%2CAUTHORIZED_CHATS%2CTOKEN_PICKLE_URL%2CDRIVE_FOLDER_URL&optionalEnvs=AUTHORIZED_CHATS%2CTOKEN_PICKLE_URL%2CDRIVE_FOLDER_URL&BOT_TOKENDesc=The+Telegram+bot+token+that+you+get+from+https%3A%2F%2Ft.me%2FBotFather.&OWNER_IDDesc=The+Telegram+User+ID+of+the+Owner+of+the+Bot.+Get+it+by+using+%2Finfo+in+https%3A%2F%2Ft.me%2FMissRose_bot.&AUTHORIZED_CHATSDesc=Fill+User+ID+and+Chat+ID+of+you+want+to+authorize%2C+Seprate+them+with+space.&TOKEN_PICKLE_URLDesc=Only+if+you+want+to+load+your+token.pickle+externally+from+an+index+link.+Fill+this+with+the+direct+link+of+that+file.&DRIVE_FOLDER_URLDesc=Only+if+you+want+to+load+your+drive_folder+externally+from+an+index+link.+Fill+this+with+the+direct+link+of+that+file.&referralCode=Hafitz"> <img src="https://img.shields.io/badge/Deploy%20to%20Railway-blueviolet?style=for-the-badge&logo=railway" width="200""/></a></p>
 
+## Deploying on Github Workflow
+- Give a star and Fork this repo.
+- Upload your **token.pickle** and **drive_folder** to your Index and put your **token.pickle** and **drive_folder** link to `TOKEN_PICKLE_URL` and `DRIVE_FOLDER_URL`.
+- Create a Private Repo
+Forked repo can't be switched to private, so you have to create this on your own. This repo is supposed to contain
+- `.env`
+or
+- `config_sample.env` (with all variable filled)
+
+## Add Secrets in Public Repo aka this repo
+As your forked repo is going to stay public or you won't get unlimited Action time you've to add some secrets. So that you can access the data of your private repo. Go to https://{your_forked_repo}/settings/secrets/actions to add secrets.
+
+You've to add these following secrets -
+
+- `GH_NAME` : Your GitHub username.
+- `GH_MAIL` : Mail that you use to sign into GitHub.
+- `CREDS` : Link to your private repo but without (https://) eg. github.com/{username}/{private repo}.
+- `GH_TOKEN` : Go to https://github.com/settings/tokens to generate a token. Tick repo, workflow and user and hit generate. Copy the token and add it to the secrets.
+- `GH_REPO` : Your current repo. `username/reponame` e.g. venomsnake/Gdrive_Search_BoT
+- `TZ` : Timezone. Findout your timezone and put it in your secret. e.g. Asia/Delhi.
+
+## Deploy Your Bot
+Our work is done. Now run a workflow and check the logs. If everything goes well your bot will restart in every six hours. You can check loop.txt to know when your bot was restarted.
+
 # Credits:
 
 - [`lzzy12`](https://github.com/lzzy12) for python-aria-mirror-bot
